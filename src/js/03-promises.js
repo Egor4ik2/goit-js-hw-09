@@ -1,3 +1,6 @@
+
+
+
 import Notiflix from "notiflix";
 
 function createPromise(position, delay) {
@@ -12,6 +15,18 @@ function createPromise(position, delay) {
       }
     }, delay);
   });
+}
+
+function showSuccessNotification(position, delay) {
+  setTimeout(() => {
+    Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+  }, delay);
+}
+
+function showFailureNotification(position, delay) {
+  setTimeout(() => {
+    Notiflix.Notify.failure(`Rejected promise ${position} in ${delay}ms`);
+  }, delay);
 }
 
 function handleSubmit(event) {
@@ -36,10 +51,10 @@ function handleSubmit(event) {
       results.forEach(result => {
         if (result.status === "fulfilled") {
           const { position, delay } = result.value;
-          Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+          showSuccessNotification(position, delay);
         } else if (result.status === "rejected") {
           const { position, delay } = result.reason;
-          Notiflix.Notify.failure(`Rejected promise ${position} in ${delay}ms`);
+          showFailureNotification(position, delay);
         }
       });
     });
